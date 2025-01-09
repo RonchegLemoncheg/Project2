@@ -50,6 +50,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.deque.html.axe-core</groupId>
+            <artifactId>selenium</artifactId>
+            <version>4.7.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide-testng</artifactId>
             <version>7.5.0</version>
@@ -74,6 +80,7 @@
       <scope>compile</scope>
     </dependency>
 
+
     </dependencies>
 
 
@@ -84,22 +91,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
                 <configuration>
-                    <argLine>-javaagent:"${com.browserstack:browserstack-java-sdk:jar}"
--javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
             </plugin>
-            <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <id>getClasspathFilenames</id>
-            <goals>
-              <goal>properties</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
         </plugins>
     </build>
 

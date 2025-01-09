@@ -1,5 +1,6 @@
 package ge.tbc.testautomation.steps.swoop;
 
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import util.Util;
 import com.codeborne.selenide.SelenideElement;
@@ -13,6 +14,7 @@ import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 public class EatAndDrinkSteps extends CommonSteps {
     EatAndDrinkPage eatAndDrinkPage = new EatAndDrinkPage();
 
+    @Step("Filter offers by number of guests: {number}")
     public EatAndDrinkSteps filterNumberOfGuests(int number) {
         eatAndDrinkPage.labels.shouldHave(sizeGreaterThan(0));
         for (SelenideElement label : eatAndDrinkPage.labels) {
@@ -25,6 +27,7 @@ public class EatAndDrinkSteps extends CommonSteps {
         throw new RuntimeException("Not an acceptable number of guests: " + number);
     }
 
+    @Step("Verify all offers are within the acceptable number-of-guests range")
     public EatAndDrinkSteps checkIfOffersAreWithinRange() {
         List<int[]> acceptableNumbers = new ArrayList<>();
         eatAndDrinkPage.labelsAfterFiltering.stream().forEach(

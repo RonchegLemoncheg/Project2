@@ -2,7 +2,6 @@ package util;
 
 
 import com.codeborne.selenide.WebDriverRunner;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 
 public class ModdedAllureSelenide extends AllureSelenide {

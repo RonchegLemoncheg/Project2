@@ -8,7 +8,7 @@
     </listeners>
 
     <test name="ChromeTest">
-        <parameter name="browserType" value="chrome"/>
+        <parameter name="browserType" value="edge"/>
         <groups>
             <run>
                 <include name="SauceDemoLogin"/>

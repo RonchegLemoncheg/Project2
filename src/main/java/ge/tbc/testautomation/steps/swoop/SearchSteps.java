@@ -1,10 +1,11 @@
 package ge.tbc.testautomation.steps.swoop;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import ge.tbc.testautomation.pages.swoop.SearchPage;
-import org.testng.Assert;
+import io.qameta.allure.Step;
+import org.testng.asserts.SoftAssert;
+import util.Util;
 
 import java.util.List;
 
@@ -17,7 +18,9 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class SearchSteps extends CommonSteps {
     SearchPage searchPage = new SearchPage();
+    SoftAssert softAssert = new SoftAssert();
 
+    @Step("Validate that all displayed offers contain the keyword: {keyword}")
     public SearchSteps validateQuery(String keyword){
         searchPage.everyOfferText.shouldHave(sizeGreaterThan(0)).forEach(
                 offer -> offer.shouldHave(text(keyword))
@@ -25,11 +28,13 @@ public class SearchSteps extends CommonSteps {
         return this;
     }
 
+    @Step("Validate that no offers are found")
     public SearchSteps validateNoOfferFound(){
         searchPage.offerNotFoundErrorMessage.should(exist);
         return this;
     }
 
+    @Step("Navigate to page: {pageNumber}")
     public SearchSteps goToPage(String pageNumber){
         String currentUrl = WebDriverRunner.url();
         try {
@@ -41,6 +46,8 @@ public class SearchSteps extends CommonSteps {
         }
     }
 
+
+    @Step("Validate that the offers on page {pageNumber} are different from the first page")
     public SearchSteps validateDifferentFromFirstPage(String pageNumber){
         goToPage("1");
         List<String> firstPageOfferTexts = searchPage.everyOfferTitle.
@@ -56,7 +63,7 @@ public class SearchSteps extends CommonSteps {
                 .toList();
         //checking that they have at least 1 diff element
         boolean isDifferent = pageOfferTexts.stream().anyMatch(item -> !firstPageOfferTexts.contains(item));
-        Assert.assertTrue(isDifferent);
+        softAssert.assertTrue(isDifferent);
         // არ არიო ეს საჭირო ალინამ და დავაკომენტარე, ისე მუშაობს
 //        pageOfferTexts.forEach(
 //                offerTitle -> {
@@ -73,6 +80,7 @@ public class SearchSteps extends CommonSteps {
         return this;
     }
 
+    @Step("Test navigation smoothness between pages")
     public SearchSteps testNavigationSmoothness(){
         goToPage("1");
         int xPosition = $("h3").getLocation().getX();
@@ -83,24 +91,25 @@ public class SearchSteps extends CommonSteps {
         String newUrl = WebDriverRunner.url();
         int newXPosition = $("h3").getLocation().getX();
         int newYPosition = $("h3").getLocation().getY();
-        Assert.assertTrue(newUrl.contains("page=2"));
-        Assert.assertEquals(xPosition,newXPosition);
-        Assert.assertEquals(yPosition,newYPosition);
+        softAssert.assertTrue(newUrl.contains("page=2"));
+        softAssert.assertEquals(xPosition,newXPosition);
+        softAssert.assertEquals(yPosition,newYPosition);
 
         searchPage.previousButton.scrollTo().click();
         webdriver().shouldNotHave(url(newUrl));
-        Assert.assertTrue(WebDriverRunner.url().contains("page=1"));
+        softAssert.assertTrue(WebDriverRunner.url().contains("page=1"));
+        softAssert.assertAll();
         return this;
     }
 
+    @Step("Click on offer at index: {number}")
     public SearchSteps clickOffer(int number) {
         String currentUrl = WebDriverRunner.url();
         if (number < 0 || number >= searchPage.everyOffer.shouldHave(sizeGreaterThan(0)).size()) {
             throw new RuntimeException("Invalid index: " + number + ". Must be between 0 and " + (searchPage.everyOffer.size() - 1));
         }
         searchPage.everyOffer.get(number).click();
-        webdriver().shouldNotHave(url(currentUrl));
-        $("html").shouldNotHave(Condition.cssClass("nprogress-busy"));
+        Util.waitForPageToLoad(currentUrl);
         return this;
     }
 }
