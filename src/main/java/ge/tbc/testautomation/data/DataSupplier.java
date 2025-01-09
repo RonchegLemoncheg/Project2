@@ -6,7 +6,7 @@ public class DataSupplier {
     @DataProvider
     public static Object[][] dataSupplier(){
         return new Object[][] {
-                {"ლაუნჯი", "meshuggah"}
+                {"ლაუნჯი", "koronal"}
         };
     }
 

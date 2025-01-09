@@ -21,3 +21,5 @@ build
 
 allure-results/*
 !allure-results/environment.properties
+
+build/*

@@ -11,7 +11,7 @@ public class DBConfiguration {
         try (InputStream inputStream = DBConfiguration.class.getClassLoader().getResourceAsStream("database.properties")) {
             properties.load(inputStream);
         } catch (IOException e) {
-            throw new RuntimeException("Properties file could not be loaded.");
+            throw new RuntimeException("Properties file could not be loaded!.");
         }
     }
 
