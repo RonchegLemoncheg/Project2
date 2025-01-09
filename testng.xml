@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Selenide1TestSuite" thread-count="3" parallel="tests">
+    <listeners>
+        <listener class-name="ge.tbc.testautomation.listeners.SuiteListener"/>
+        <listener class-name="ge.tbc.testautomation.listeners.TestListener"/>
+    </listeners>
+
+    <test name="ChromeTest">
+        <parameter name="browserType" value="edge"/>
+        <groups>
+            <run>
+                <include name="SauceDemoLogin"/>
+                <include name="SwoopRegression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="saucedemo.LoginTests"/>
+            <class name="swoop.OfferTests"/>
+        </classes>
+    </test>
+
+<!--    <test name="FirefoxTest">-->
+<!--        <parameter name="browserType" value="firefox"/>-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="SauceDemoLogin"/>-->
+<!--                <include name="SwoopRegression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--        <classes>-->
+<!--            <class name="saucedemo.LoginTests"/>-->
+<!--            <class name="swoop.OfferTests"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--    <test name="EdgeTest">-->
+<!--        <parameter name="browserType" value="edge"/>-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="SauceDemoLogin"/>-->
+<!--                <include name="SwoopRegression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--        <classes>-->
+<!--            <class name="saucedemo.LoginTests"/>-->
+<!--            <class name="swoop.OfferTests"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>
