@@ -33,7 +33,7 @@ public class DatabaseSteps {
                 String password = resultSet.getString("password");
                 return new String[] {username, password};
             } else {
-                throw new RuntimeException("Error: User not found");
+                throw new RuntimeException("Error: User not found.");
             }
 
         } catch (SQLException e) {
